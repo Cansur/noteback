@@ -8,9 +8,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class TestController {
+
     @GetMapping("/")
     public String getMethodName() {
         return "index";
     }
-    
+
+    @GetMapping("/api/hello")
+    public String test() {
+        return "Hello, world!";
+    }
 }
