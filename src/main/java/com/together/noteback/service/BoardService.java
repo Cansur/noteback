@@ -1,10 +1,11 @@
 package com.together.noteback.service;
 
+import com.together.noteback.entity.BoardEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.together.noteback.Repository.BoardRepository;
-import com.together.noteback.data.Board;
+import com.together.noteback.repository.BoardRepository;
+
 
 @Service
 public class BoardService {
@@ -13,7 +14,7 @@ public class BoardService {
     private BoardRepository boardRepository;
 
     public void writeBoard(){
-        Board board = new Board();
+        BoardEntity board = new BoardEntity();
         board.setUsername("username");
         board.setTitle("1");
         board.setContent("abcdefg");

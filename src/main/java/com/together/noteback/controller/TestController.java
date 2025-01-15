@@ -15,7 +15,7 @@ public class TestController {
     @Autowired
     private BoardService boardService;    
 
-    @GetMapping("/")
+    @GetMapping("/api")
     public String index() {
         return "index";
     }
