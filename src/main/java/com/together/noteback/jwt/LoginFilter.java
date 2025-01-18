@@ -24,6 +24,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
         this.authenticationManager = authenticationManager;
         this.jwtUtil = jwtUtil;
+        setFilterProcessesUrl("/api/login"); // 변경된 경로 설정
     }
 
     @Override

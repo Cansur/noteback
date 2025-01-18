@@ -26,7 +26,7 @@ public class JoinService {
         Boolean isExist = userRepository.existsByUsername(username);
 
         if (isExist) {
-
+            System.out.println("isExist !!");
             return;
         }
 
@@ -34,7 +34,7 @@ public class JoinService {
 
         data.setUsername(username);
         data.setPassword(bCryptPasswordEncoder.encode(password));
-        data.setRole("ROLE_ADMIN");
+        data.setRole("ROLE_USER");
 
         userRepository.save(data);
 
