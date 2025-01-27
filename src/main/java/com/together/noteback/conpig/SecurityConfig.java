@@ -6,6 +6,7 @@ import com.together.noteback.jwt.LoginFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -56,7 +57,7 @@ public class SecurityConfig {
                                                 .configurationSource(new CorsConfigurationSource() {
                                                         @Override
                                                         public CorsConfiguration getCorsConfiguration(
-                                                                        HttpServletRequest request) {
+                                                                        @NonNull HttpServletRequest request) {
                                                                 CorsConfiguration configuration = new CorsConfiguration();
                                                                 configuration.setAllowedOrigins(Collections
                                                                                 .singletonList("http://localhost:3000"));
@@ -87,7 +88,7 @@ public class SecurityConfig {
                 // 경로별 인가 작업
                 http
                                 .authorizeHttpRequests(auth -> auth
-                                                .requestMatchers("/", "/join", "/api/hello", "/api/login").permitAll() // 변경된
+                                                .requestMatchers("/", "/join", "/api/**").permitAll() // 변경된
                                                                                                                        // URL
                                                                                                                        // 적용
                                                 .requestMatchers("/admin").hasRole("ADMIN")

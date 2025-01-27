@@ -2,6 +2,7 @@ package com.together.noteback.conpig;
 
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.lang.NonNull;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -9,7 +10,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class CorsMvcConfig implements WebMvcConfigurer {
 
     @Override
-    public void addCorsMappings(CorsRegistry corsRegistry) {
+    public void addCorsMappings(@NonNull CorsRegistry corsRegistry) {
 
         corsRegistry.addMapping("/**")
                 .allowedOrigins("http://localhost:3000");
