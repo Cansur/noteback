@@ -3,6 +3,7 @@ package com.together.noteback.conpig;
 import com.together.noteback.jwt.JWTFilter;
 import com.together.noteback.jwt.JWTUtil;
 import com.together.noteback.jwt.LoginFilter;
+import com.together.noteback.repository.RefreshRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,10 +29,13 @@ public class SecurityConfig {
 
         private final JWTUtil jwtUtil;
 
-        public SecurityConfig(AuthenticationConfiguration authenticationConfiguration, JWTUtil jwtUtil) {
+        private final RefreshRepository refreshRepository;
+
+        public SecurityConfig(AuthenticationConfiguration authenticationConfiguration, JWTUtil jwtUtil, RefreshRepository refreshRepository) {
 
                 this.authenticationConfiguration = authenticationConfiguration;
                 this.jwtUtil = jwtUtil;
+                this.refreshRepository = refreshRepository;
         }
 
         // AuthenticationManager Bean 등록
@@ -102,7 +106,7 @@ public class SecurityConfig {
                 http
                                 .addFilterAt(
                                                 new LoginFilter(authenticationManager(authenticationConfiguration),
-                                                                jwtUtil),
+                                                                jwtUtil, refreshRepository),
                                                 UsernamePasswordAuthenticationFilter.class);
 
                 // 세션 관리 설정 (Stateless)
