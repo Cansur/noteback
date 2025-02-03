@@ -90,6 +90,7 @@ public class SecurityConfig {
                                                 .requestMatchers("/", "/join", "/api/hello", "/api/login").permitAll() // 변경된
                                                                                                                        // URL
                                                                                                                        // 적용
+                                                .requestMatchers("/api/reissue").permitAll()
                                                 .requestMatchers("/admin").hasRole("ADMIN")
                                                 .anyRequest().authenticated());
 
