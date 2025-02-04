@@ -1,8 +1,10 @@
 package com.together.noteback.conpig;
 
+import com.together.noteback.jwt.CustomLogoutFilter;
 import com.together.noteback.jwt.JWTFilter;
 import com.together.noteback.jwt.JWTUtil;
 import com.together.noteback.jwt.LoginFilter;
+import com.together.noteback.repository.RefreshRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +16,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 
@@ -28,10 +31,13 @@ public class SecurityConfig {
 
         private final JWTUtil jwtUtil;
 
-        public SecurityConfig(AuthenticationConfiguration authenticationConfiguration, JWTUtil jwtUtil) {
+        private final RefreshRepository refreshRepository;
+
+        public SecurityConfig(AuthenticationConfiguration authenticationConfiguration, JWTUtil jwtUtil, RefreshRepository refreshRepository) {
 
                 this.authenticationConfiguration = authenticationConfiguration;
                 this.jwtUtil = jwtUtil;
+                this.refreshRepository = refreshRepository;
         }
 
         // AuthenticationManager Bean 등록
@@ -90,6 +96,7 @@ public class SecurityConfig {
                                                 .requestMatchers("/", "/join", "/api/hello", "/api/login").permitAll() // 변경된
                                                                                                                        // URL
                                                                                                                        // 적용
+                                                .requestMatchers("/api/reissue").permitAll()
                                                 .requestMatchers("/admin").hasRole("ADMIN")
                                                 .anyRequest().authenticated());
 
@@ -101,8 +108,12 @@ public class SecurityConfig {
                 http
                                 .addFilterAt(
                                                 new LoginFilter(authenticationManager(authenticationConfiguration),
-                                                                jwtUtil),
+                                                                jwtUtil, refreshRepository),
                                                 UsernamePasswordAuthenticationFilter.class);
+
+                // 로그아웃
+                http
+                                .addFilterBefore(new CustomLogoutFilter(jwtUtil, refreshRepository), LogoutFilter.class);
 
                 // 세션 관리 설정 (Stateless)
                 http
