@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.together.noteback.dto.WriteBoardDTO;
 import com.together.noteback.entity.BoardEntity;
 import com.together.noteback.service.BoardService;
+
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -39,5 +41,11 @@ public class BoardController {
     @PutMapping("/{id}")
     public void putBoard(@PathVariable("id") Integer id, @ModelAttribute WriteBoardDTO writeBoardDTO) {
         boardService.putBoard(id, writeBoardDTO);
+    }
+    
+    /** 게시판 삭제 */
+    @DeleteMapping("/{id}")
+    public void deleteBoard(@PathVariable("id") Integer id){
+        boardService.deleteBoard(id);
     }
 }
