@@ -22,13 +22,5 @@ public class TestController {
     public String test() {
         return "Hello, world!";
     }
-
-    @GetMapping("/create")
-    public String createe() {
-        boardService.writeBoard();
-        return "new String()";
-    }
-
-    
     
 }
