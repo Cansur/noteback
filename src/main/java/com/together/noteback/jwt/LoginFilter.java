@@ -19,6 +19,13 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
 
+/**
+ * 로그인 요청을 처리하는 필터 
+ * <p>
+ * /api/login 경로로 POST 요청이 오면 LoginFilter가 가로챕니다. <p>
+ * form-data로 전달된 username과 password를 추출하고 UsernamePasswordAuthenticationToken을 생성하여 AuthenticationManager에게 전달합니다.<p>
+ * 성공 시 Access 토큰과 Refresh 토큰을 발급하고 응답 헤더와 쿠키에 담아 반환합니다.<p>
+ */
 public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
     private final AuthenticationManager authenticationManager;

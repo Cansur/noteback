@@ -23,6 +23,11 @@ import org.springframework.web.cors.CorsConfigurationSource;
 
 import java.util.Collections;
 
+/**
+ * Spring Security의 보안 설정
+ * <p>
+ * CORS 설정, 인증 방식 설정, JWT 기반 인증 처리, 권한 설정, 로그아웃 처리
+ */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -34,7 +39,8 @@ public class SecurityConfig {
 
         private final RefreshRepository refreshRepository;
 
-        public SecurityConfig(AuthenticationConfiguration authenticationConfiguration, JWTUtil jwtUtil, RefreshRepository refreshRepository) {
+        public SecurityConfig(AuthenticationConfiguration authenticationConfiguration, JWTUtil jwtUtil,
+                        RefreshRepository refreshRepository) {
 
                 this.authenticationConfiguration = authenticationConfiguration;
                 this.jwtUtil = jwtUtil;
@@ -94,9 +100,9 @@ public class SecurityConfig {
                 // 경로별 인가 작업
                 http
                                 .authorizeHttpRequests(auth -> auth
-                                                .requestMatchers("/", "/join", "/api/**").permitAll() // 변경된
-                                                                                                                       // URL
-                                                                                                                       // 적용
+                                                .requestMatchers("/", "/join", "/api/login").permitAll() // 변경된
+                                                                                                         // URL
+                                                                                                         // 적용
                                                 .requestMatchers("/api/reissue").permitAll()
                                                 .requestMatchers("/admin").hasRole("ADMIN")
                                                 .anyRequest().authenticated());
@@ -114,7 +120,8 @@ public class SecurityConfig {
 
                 // 로그아웃
                 http
-                                .addFilterBefore(new CustomLogoutFilter(jwtUtil, refreshRepository), LogoutFilter.class);
+                                .addFilterBefore(new CustomLogoutFilter(jwtUtil, refreshRepository),
+                                                LogoutFilter.class);
 
                 // 세션 관리 설정 (Stateless)
                 http

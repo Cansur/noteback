@@ -8,6 +8,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 // import java.util.List;
 
+/**
+ * UserDetails 은 Spring Security에서 사용자의 정보를 담는 인터페이스<p>
+ * Plus + 권한 반환, 비밀번호 반환, 유저네임 반환
+ */
 public class CustomUserDetails implements UserDetails {
 
     private final UserEntity userEntity;
@@ -22,14 +26,11 @@ public class CustomUserDetails implements UserDetails {
         Collection<GrantedAuthority> collection = new ArrayList<>();
 
         collection.add(new GrantedAuthority() {
-
             @Override
             public String getAuthority() {
-
                 return userEntity.getRole();
             }
         });
-
         return collection;
     }
 

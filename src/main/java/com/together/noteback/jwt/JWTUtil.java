@@ -9,6 +9,9 @@ import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
+/**
+ * 비밀보안 <code>secretKey</code>를 가지고 JWT를 생성하고 검증하는 클래스
+ */
 @Component
 public class JWTUtil {
 

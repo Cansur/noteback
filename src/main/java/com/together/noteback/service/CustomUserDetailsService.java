@@ -8,6 +8,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+/**
+ * UserDetailsService 은 Spring Security에서 유저의 정보를 가져오는 인터페이스
+ */
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
