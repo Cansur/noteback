@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Collection;
 import java.util.Iterator;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @Controller
 @ResponseBody
@@ -28,4 +30,10 @@ public class MainController {
 
         return "Main Controller : " + username + role;
     }
+
+    @GetMapping("/api/test")
+    public String testMethod() {
+        return "test success";
+    }
+    
 }

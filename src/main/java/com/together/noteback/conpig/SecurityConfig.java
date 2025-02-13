@@ -1,5 +1,6 @@
 package com.together.noteback.conpig;
 
+import com.together.noteback.controller.ReissueController;
 import com.together.noteback.jwt.CustomLogoutFilter;
 import com.together.noteback.jwt.JWTFilter;
 import com.together.noteback.jwt.JWTUtil;
@@ -100,10 +101,7 @@ public class SecurityConfig {
                 // 경로별 인가 작업
                 http
                                 .authorizeHttpRequests(auth -> auth
-                                                .requestMatchers("/", "/join", "/api/login").permitAll() // 변경된
-                                                                                                         // URL
-                                                                                                         // 적용
-                                                .requestMatchers("/api/reissue").permitAll()
+                                                .requestMatchers("/", "/join", "/api/login","/api/reissue", "/api/test/**").permitAll()
                                                 .requestMatchers("/admin").hasRole("ADMIN")
                                                 .anyRequest().authenticated());
 
@@ -131,4 +129,5 @@ public class SecurityConfig {
                 return http.build();
         }
 
+        
 }
