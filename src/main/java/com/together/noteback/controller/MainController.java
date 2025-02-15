@@ -31,7 +31,7 @@ public class MainController {
         return "Main Controller : " + username + role;
     }
 
-    @GetMapping("/api/test")
+    @GetMapping("/api/access")
     public String testMethod() {
         return "test success";
     }
