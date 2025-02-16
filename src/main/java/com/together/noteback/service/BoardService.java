@@ -4,6 +4,7 @@ import com.together.noteback.dto.WriteBoardDTO;
 import com.together.noteback.entity.BoardEntity;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,8 +15,11 @@ import com.together.noteback.repository.BoardRepository;
 @Service
 public class BoardService {
     
-    @Autowired
-    private BoardRepository boardRepository;
+    private final BoardRepository boardRepository;
+
+    public BoardService(BoardRepository boardRepository){
+        this.boardRepository = boardRepository;
+    }
 
     /** 게시판 작성 */
     public void writeBoard(WriteBoardDTO writeBoardDTO){
@@ -45,6 +49,9 @@ public class BoardService {
         boardRepository.deleteById(id);
     }
 
-
+    /** ✅ 특정 사용자의 게시글만 가져오기 */
+    public List<BoardEntity> getBoardsByUsername(String username){
+        return boardRepository.findByUsername(username);
+    }
     
 }

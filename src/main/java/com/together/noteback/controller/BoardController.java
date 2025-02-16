@@ -1,6 +1,9 @@
 package com.together.noteback.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
 import com.together.noteback.dto.WriteBoardDTO;
 import com.together.noteback.entity.BoardEntity;
@@ -22,8 +25,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 @RequestMapping("/api/board")
 public class BoardController {
     
-    @Autowired
-    private BoardService boardService;
+    private final BoardService boardService;
+
+    public BoardController(BoardService boardService){
+        this.boardService = boardService;
+    }
 
     /** id를 이용하여 게시판 찾기 */
     @GetMapping("/{id}")
@@ -47,5 +53,11 @@ public class BoardController {
     @DeleteMapping("/{id}")
     public void deleteBoard(@PathVariable("id") Integer id){
         boardService.deleteBoard(id);
+    }
+
+    // ✅ 현재 로그인한 사용자의 게시글만 반환
+    @GetMapping("/my")
+    public List<BoardEntity> getMyBoards(@AuthenticationPrincipal String username) {
+        return boardService.getBoardsByUsername(username);
     }
 }

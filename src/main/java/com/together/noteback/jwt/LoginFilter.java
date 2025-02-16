@@ -56,10 +56,20 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         try {
             // JSON 데이터를 직접 읽어오기
             ObjectMapper objectMapper = new ObjectMapper();
+
+            // 요청 바디가 비어있는지 확인
+            if (request.getInputStream().available() == 0) {
+                throw new RuntimeException("요청 바디가 비어 있습니다.");
+            }
+
             Map<String, String> requestBody = objectMapper.readValue(request.getInputStream(), Map.class);
 
             String username = requestBody.get("username");
             String password = requestBody.get("password");
+
+            if (username == null || password == null) {
+                throw new RuntimeException("username 또는 password가 누락되었습니다.");
+            }
 
             // 스프링 시큐리티에서 username과 password를 검증하기 위해서 token에 담기
             UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(username, password,
@@ -69,7 +79,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
             return authenticationManager.authenticate(authToken);
 
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("JSON 데이터를 읽을 수 없습니다: " + e.getMessage());
         }
     }
 
