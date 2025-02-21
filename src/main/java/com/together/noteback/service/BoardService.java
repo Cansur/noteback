@@ -21,18 +21,27 @@ public class BoardService {
         this.boardRepository = boardRepository;
     }
 
-    /** 게시판 작성 */
-    public void writeBoard(WriteBoardDTO writeBoardDTO){
+    /** 게시판 작성 <p>
+     * 1. 게시판 작성 시, 게시글 ID를 반환한다.
+    */
+    public Integer writeBoard(WriteBoardDTO writeBoardDTO, String username){
         BoardEntity board = new BoardEntity();
-        board.setUsername(writeBoardDTO.getUsername());
+        board.setUsername(username);
         board.setTitle(writeBoardDTO.getTitle());
         board.setContent(writeBoardDTO.getContent());
         boardRepository.save(board);
+
+        return board.getId();
+        // System.out.println("게시글 ID: " + board.getId() + " 저장 완료!");
     }
 
     /** 게시판 보기 */
-    public BoardEntity getBoard(Integer id){
-        return boardRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("can't find board"));
+    public BoardEntity getBoard(Integer id, String username){
+        BoardEntity board = boardRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("can't find board"));
+        if(!board.getUsername().equals(username)){
+            throw new IllegalArgumentException("different username");
+        }
+        return board;
     }
 
     /** 게시판 수정 */
