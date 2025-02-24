@@ -1,6 +1,5 @@
 package com.together.noteback.conpig;
 
-import com.together.noteback.controller.ReissueController;
 import com.together.noteback.jwt.CustomLogoutFilter;
 import com.together.noteback.jwt.JWTFilter;
 import com.together.noteback.jwt.JWTUtil;

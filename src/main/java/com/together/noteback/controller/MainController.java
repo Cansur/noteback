@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Collection;
 import java.util.Iterator;
-import org.springframework.web.bind.annotation.RequestParam;
-
 
 @Controller
 @ResponseBody
