@@ -2,10 +2,12 @@ package com.together.noteback.controller;
 
 import com.together.noteback.dto.JoinDTO;
 import com.together.noteback.service.JoinService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @ResponseBody
@@ -23,7 +25,17 @@ public class JoinController {
 
         joinService.joinProcess(joinDTO);
 
-        return "ok";
+        return "회원가입 성공";
+    }
+
+    @GetMapping("/api/check-username")
+    public ResponseEntity<Map<String, Boolean>> checkUsername(@RequestParam String username) {
+
+        boolean isAvailable = joinService.isUsernameAvailable(username);
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("available", isAvailable);
+
+        return ResponseEntity.ok(response);
     }
 
 
