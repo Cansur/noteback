@@ -18,6 +18,7 @@ public class JoinService {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
+    // 회원 가입
     public void joinProcess(JoinDTO joinDTO) {
 
         String username = joinDTO.getUsername();
@@ -38,6 +39,11 @@ public class JoinService {
 
         userRepository.save(data);
 
+    }
+
+    // 아이디 중복 검사
+    public boolean isUsernameAvailable(String username) {
+        return !userRepository.existsByUsername(username);
     }
 
 
