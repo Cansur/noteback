@@ -81,6 +81,7 @@ public class ReissueController {
         String newAccess = jwtUtil.createJwt("access", username, role, 60000L); // 테스트를 위해 만료 시간을 1분으로 설정
 
         // 새로운 refresh는 그만
+        // bug fix - 트랜잭션 충돌 원인
         // String newRefresh = jwtUtil.createJwt("refresh", username, role, 86400000L);
 
         //Refresh 토큰 저장 DB에 기존의 Refresh 토큰 삭제 후 새 Refresh 토큰 저장

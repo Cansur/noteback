@@ -66,7 +66,9 @@ public class BoardController {
 
     // ✅ 현재 로그인한 사용자의 게시글만 반환
     @GetMapping("/my")
-    public List<BoardEntity> getMyBoards(@AuthenticationPrincipal String username) {
+    public List<BoardEntity> getMyBoards(HttpServletRequest request) {
+        String token = extractToken(request);
+        String username = jwtUtil.getUsername(token);
         return boardService.getBoardsByUsername(username);
     }
 
