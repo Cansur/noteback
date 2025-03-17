@@ -1,6 +1,7 @@
 package com.together.noteback.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -72,6 +74,19 @@ public class BoardController {
         return boardService.getBoardsByUsername(username);
     }
 
+    @GetMapping("/search")
+    public List<String> search(@RequestParam(name = "q") String q) {
+        // 테스트용 데이터
+        List<String> data = List.of("Spring Boot", "Spring Security", "Spring Data", "Spring Cloud");
+
+        // 일단은 MySQL에서 LIKE 검색을 하는 것으로 가정으로 하고 가져오자
+        // List<String> data2 = boardService.search(q);
+        return data.stream()
+                .filter(item -> item.toLowerCase().contains(q.toLowerCase()))
+                .collect(Collectors.toList());
+    }
+
+    // request를 String token으로 변환.
     private String extractToken(HttpServletRequest request) {
         String token = request.getHeader("access");
         if (token == null) {

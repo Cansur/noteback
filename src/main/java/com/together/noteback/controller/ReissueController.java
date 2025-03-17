@@ -77,8 +77,8 @@ public class ReissueController {
         String role = jwtUtil.getRole(refresh);
 
         //make new JWT
-        // String newAccess = jwtUtil.createJwt("access", username, role, 600000L);
-        String newAccess = jwtUtil.createJwt("access", username, role, 60000L); // 테스트를 위해 만료 시간을 1분으로 설정
+        String newAccess = jwtUtil.createJwt("access", username, role, 600000L);
+        // String newAccess = jwtUtil.createJwt("access", username, role, 60000L); // 테스트를 위해 만료 시간을 1분으로 설정
 
         // 새로운 refresh는 그만
         // bug fix - 트랜잭션 충돌 원인
