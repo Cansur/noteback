@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.together.noteback.service.BoardService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 
@@ -25,17 +27,12 @@ public class TestController {
 
     @GetMapping("/")
     public String index() {
-        return "index";
+        return "Welcome test!! 1.1version";
     }
 
-    @GetMapping("/success")
-    public String testmethod() {
-        return "scucess";
+    @GetMapping("/user")
+    public String getMethodName() {
+        return "user";
     }
-
-    @PostMapping("/")
-    public void postMethodName(@RequestBody Map<String, String> request) {
-        //TODO: process POST request
-        System.out.println(request.get("username"));
-    }
+    
 }
